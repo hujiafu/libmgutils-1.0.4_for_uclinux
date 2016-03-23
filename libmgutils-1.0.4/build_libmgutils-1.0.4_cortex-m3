@@ -1,5 +1,7 @@
 make clean
 
+export TOOLCHAIN="/home/hujiafu/uclinux/cortexm_uclinux-master/cross_tools/arm-2010q1-uclinux/arm-uclinuxeabi"
+
 export CC=arm-uclinuxeabi-gcc
 export CPP=arm-uclinuxeabi-cpp
 export CXX=arm-uclinuxeabi-g++
@@ -13,15 +15,28 @@ export OBJDUMP=arm-uclinuxeabi-objdump
 
 export CFLAGS="-I. -I/usr/local/minigui/cross/arm/cortex-m3/include -mcpu=cortex-m3 -mthumb"
 export CXXFLAGS="-I. -I/usr/local/minigui/cross/arm/cortex-m3/include -mcpu=cortex-m3 -mthumb"
-export LDFLAGS="-L/usr/local/minigui/cross/arm/cortex-m3/lib"
+export LDFLAGS="-mcpu=cortex-m3 -mthumb -L/usr/local/minigui/cross/arm/cortex-m3/lib"
 export PKG_CONFIG_PATH="/usr/local/minigui/cross/arm/cortex-m3/lib/pkgconfig"
-export MINIGUI_CFLAGS="-I/usr/local/minigui/cross/arm/cortex-m3/include/minigui"
-export MINIGUI_LIBS="-L/usr/local/minigui/cross/arm/cortex-m3/lib"
+export MINIGUI_CFLAGS="-I/usr/local/minigui/cross/arm/cortex-m3/include/minigui -mcpu=cortex-m3 -mthumb"
+export MINIGUI_LIBS="-mcpu=cortex-m3 -mthumb -L/usr/local/minigui/cross/arm/cortex-m3/lib"
 
 export LIBS="-L /usr/local/minigui/cross/arm/cortex-m3/lib/libminigui_ths.a \
 /usr/local/minigui/cross/arm/cortex-m3/lib/libpng.a \
 /usr/local/minigui/cross/arm/cortex-m3/lib/libz.a \
 /usr/local/minigui/cross/arm/cortex-m3/lib/libjpeg.a"
+
+export CFLAGS="-I. -I./include \
+-I${TOOLCHAIN}/include/c++/4.4.1 \
+-I${TOOLCHAIN}/libc/usr/include \
+-I/usr/local/minigui/cross/arm/cortex-m3/include -mcpu=cortex-m3 -mthumb -static"
+
+export LDFLAGS="-mcpu=cortex-m3 -mthumb -L${TOOLCHAIN}/libc/usr/lib \
+-L/usr/local/minigui/cross/arm/cortex-m3/lib"
+export MINIGUI_CFLAGS="-mcpu=cortex-m3 -mthumb -L${TOOLCHAIN}/libc/usr/lib \
+-L/usr/local/minigui/cross/arm/cortex-m3/lib"
+
+export MINIGUI_LIBS="-mcpu=cortex-m3 -mthumb -lminigui_ths -lpng -lts -lc -ljpeg -lz -lm -pthread"
+export LIBS="-mcpu=cortex-m3 -mthumb -ljpeg -lpng -lm -pthread -lmyguiinput"
 
 ./configure --build=i686-linux --host=arm-linux --target=arm-linux --prefix=/usr/local/minigui/cross/arm/cortex-m3 --enable-static=yes --enable-shared=no
 
